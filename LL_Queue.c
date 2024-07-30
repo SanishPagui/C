@@ -19,6 +19,7 @@ void insert(int key){
     else
         rear->link=temp;
     rear=temp;
+    display();
 }
 int peek(){
     if(front==NULL){
@@ -38,7 +39,7 @@ void delete(){
     temp=front;
     front=front->link;
     free(temp);
-    printf("The deleted element is %d",key);
+    printf("\nThe deleted element is %d\n",key);
 }
 void display(){
     if(front==NULL){
@@ -46,40 +47,15 @@ void display(){
         return;
     }
     struct node *temp=front;
+    printf("\n");
+    for(temp=front;temp!=NULL;temp=temp->link){
+        printf(" ___");
+    }
     while(temp!=NULL){
         printf("%d\t",temp->info);
         temp=temp->link;
     }
 }
 int main(){
-    int choice,data;
-    do {
-        printf("\n1. Insert");
-        printf("\n2. Delete");
-        printf("\n3. Display");
-        printf("\n4. Peek");
-        printf("\n5. Exit");
-        printf("\n\nEnter your choice: ");
-        scanf("%d",&choice);
-        switch(choice){
-            case 1:
-                printf("Enter the element to push: ");
-                scanf("%d",&data);
-                insert(data);
-                break;
-            case 2:
-                delete();
-                break;
-            case 3:
-                display();
-                break;
-            case 4:
-                peek();
-                break;
-            case 5:
-                exit(1);
-            default:
-                printf("\nWrong Input");
-        }
-    } while (1);
+    insert(85);insert(107);insert(105);insert(25);insert(23);delete();delete();insert(57);delete();delete();delete();delete();insert(13);delete();delete();
 }

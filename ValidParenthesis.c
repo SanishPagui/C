@@ -32,8 +32,8 @@ int isBalanced(char *exp){
             char removal=top->info;
             if((exp[i]==')' && removal!='(') || (exp[i]=='}' && removal!='{') || (exp[i]==']' && removal!='['))
                 return 0;
-            pop();
         }
+        pop();
     }
     return 1;
 }

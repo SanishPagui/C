@@ -4,90 +4,74 @@
 int front=-1;
 int rear=-1;
 int queue[MAX];
-int isFull(){
-    if(rear == MAX-1)
-        return 1;
-    else
-        return 0;
-}
-
-int isEmpty(){
-    if(front == -1 || front==rear+1)
-        return 1;
-    else
-        return 0;
-}
-
-void peek(){
-    if(isEmpty()){
-        printf("Queue Underflow\n");
-        exit(1);
+void display(){
+    printf("\nQueue is:\n");
+    for(int i=0;i<MAX;i++){
+        printf(" [%d]",i);
     }
-    printf("The first element is: %d",queue[front]);
+    printf("\n");
+    for(int i=0;i<MAX;i++){
+        printf(" ___",i);
+    }
+    printf("\n|");
+    for(int i=0;i<MAX;i++){
+        if(i>=front && i<=rear){
+            if(queue[i]>=0 && queue[i]<10)
+                printf("__%d",queue[i]);
+            else if(queue[i]>=10 && queue[i]<100)
+                printf("_%d",queue[i]);
+            else if(queue[i]>=100)
+                printf("%d",queue[i]);
+        } 
+        else{
+            printf("___");
+        }
+        printf("|");
+    }
+    printf("\n");
 }
-
 void insert(int key){
-    if(isFull()){
-        printf("Queue Overflow\n");
+    if(rear == MAX-1){
+        printf("\nInsert(%d)",key);
+        printf("\nQueue Overflow\n");
         return;
     }
     if(front== -1)
         front=0;
     queue[++rear]=key;
+    printf("\nInsert(%d)",key);
+    display();
 }
 
 int del(){
     int key;
-    if(isEmpty()){
-        printf("Queue Underflow\n");
+    if(front == -1 || front==rear+1){
+        printf("\nDelete(%d)",key);
+        printf("\nQueue Underflow\n");
         exit(1);
     }
     key=queue[front++];
-    printf("The deleted element is: %d",key);
+    printf("\nDelete(%d)",key);
+    display();
+    printf("The deleted element is: %d\n",key);
     return key;
-}
-
-void display(){
-    if(isEmpty()){
-        printf("Queue is Empty\n");
-        return;
-    }
-    printf("Queue is:\n");
-    for(int i=front;i<=rear;i++)
-        printf("%d\n",queue[i]);
-    printf("\n");
 }
 
 int main(){
     int choice,data;
-    do {
-        printf("\n1. Insert");
-        printf("\n2. Delete");
-        printf("\n3. Display");
-        printf("\n4. Peek");
-        printf("\n5. Exit");
-        printf("\n\nEnter your choice: ");
-        scanf("%d",&choice);
-        switch(choice){
-            case 1:
-                printf("Enter the element to push: ");
-                scanf("%d",&data);
-                insert(data);
-                break;
-            case 2:
-                del();
-                break;
-            case 3:
-                display(front);
-                break;
-            case 4:
-                peek(front);
-                break;
-            case 5:
-                exit(1);
-            default:
-                printf("\nWrong Input");
-        }
-
-    } while (1);
+    insert(85);
+    insert(107);
+    insert(105);
+    insert(25);
+    insert(23);
+    del();
+    del();
+    insert(57);
+    del();
+    del();
+    del();
+    del();
+    insert(13);
+    del();
+    del();
 }

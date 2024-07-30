@@ -32,10 +32,10 @@ int isBalanced(char *exp){
             char removal=top->info;
             if((exp[i]==')' && removal!='(') || (exp[i]=='}' && removal!='{') || (exp[i]==']' && removal!='['))
                 return 0;
+            pop();
         }
-        pop();
     }
-    return 1;
+    return top==NULL;
 }
 int main() {
     char exp[100];

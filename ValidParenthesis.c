@@ -8,17 +8,44 @@ struct node *top=NULL;
 struct node *disp=NULL;
 void display(){
     struct node *p=disp;
+    printf(" ________    ");
     while(p!=NULL){
-        printf(" ___ ________________    ");
         p=p->link;
+        if(p==NULL){
+            printf(" ___ _______");
+            break;
+        }
+        printf(" ___ ________    ");
     }
     p=disp;
-    printf("\n");
+    printf("\n|");
+    printf("%.6x|-->",p);
     while(p!=NULL){
+        if(p->link==NULL){
+            printf("|");
+            printf("_%c_|___%lx___|-->",p->info,p->link);
+            break;
+        }
         printf("|");
-        printf("_%c_|%p|-->",p->info,p->link);
+        printf("_%c_|%lx|-->",p->info,p->link);
+        p=p->link;  
+        if(p==NULL)
+            printf("NULL");
+    }
+    printf("\n");
+    int i=0;
+    while(i<13){
+        printf(" ");
+        i++;
+    }
+    p=disp;
+    while(p!=NULL){
+        printf("   ");
+        printf("%lx",p);
+        printf("      ");
         p=p->link;
     }
+    
 }
 void disppush(char data){
     struct node *temp;
@@ -69,7 +96,7 @@ int main(){
     printf("Enter an expression: ");
     scanf("%s",exp);
     if (isBalanced(exp))
-        printf("\nBalanced\n");
+        printf("\n\nBalanced\n");
     else
         printf("\nNot Balanced\n");
 }

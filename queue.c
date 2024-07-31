@@ -11,7 +11,7 @@ void display(){
     }
     printf("\n");
     for(int i=0;i<MAX;i++){
-        printf(" ___",i);
+        printf(" ___");
     }
     printf("\n|");
     for(int i=0;i<MAX;i++){

@@ -49,7 +49,6 @@ void Display(){
 
 int main() {
     int choice,data,top;
-    char wish;
     do {
         printf("\n1. Push");
         printf("\n2. Pop");
@@ -78,8 +77,5 @@ int main() {
             default:
                 printf("\nWrong Input");
         }
-        printf("\nDo you want to continue?(y/n): ");
-        getchar();
-        scanf("%c",&wish);
-    } while (wish=='y');
+    } while (1);
 }

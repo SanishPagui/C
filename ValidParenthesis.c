@@ -21,16 +21,16 @@ void display(){
     printf("\n|");
     printf("%.6x|-->",p);
     while(p!=NULL){
+        if(p==NULL)
+            printf("NULL");
         if(p->link==NULL){
             printf("|");
-            printf("_%c_|___%lx___|-->",p->info,p->link);
+            printf("_%c_|___%lx___|",p->info,p->link);
             break;
         }
         printf("|");
         printf("_%c_|%lx|-->",p->info,p->link);
         p=p->link;  
-        if(p==NULL)
-            printf("NULL");
     }
     printf("\n");
     int i=0;
@@ -45,7 +45,7 @@ void display(){
         printf("      ");
         p=p->link;
     }
-    
+    printf("\n");
 }
 void disppush(char data){
     struct node *temp;
@@ -60,7 +60,6 @@ void push(char data){
     temp->info=data;
     temp->link=top;
     top=temp;
-    
 }
 void pop(){
     struct node *temp;
@@ -69,6 +68,7 @@ void pop(){
         return;
     }
     temp=top;
+    char c=temp->info;
     top=top->link;
     free(temp);
 }

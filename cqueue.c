@@ -5,27 +5,38 @@ int front=-1;
 int rear=-1;
 int queue[MAX];
 int isFull(){
-    if((front == 0 && rear==MAX-1) || front==rear+1)
-        return 1;
-    else
-        return 0;
+    return ((rear+1)%MAX==front);
 }
-
-int isEmpty(){
-    if(front == -1 || front==rear+1)
-        return 1;
-    else
-        return 0;
-}
-
-void peek(){
-    if(isEmpty()){
-        printf("Queue Underflow\n");
-        exit(1);
+void display(){
+    for(int i=0;i<MAX;i++){
+        printf(" [%d]",i);
     }
-    printf("The first element is: %d",queue[front]);
+    printf("\n");
+    for(int i=0;i<MAX;i++){
+        printf(" ___");
+    }
+    printf("\n|");
+    for(int i=0;i<MAX;i++){
+        if((i>=front && i<=rear) || (front>rear && ((i>=front || i<=rear)))){
+            if(queue[i]>=0 && queue[i]<10)
+                printf("__%d",queue[i]);
+            else if(queue[i]>=10 && queue[i]<100)
+                printf("_%d",queue[i]);
+            else if(queue[i]>=100)
+                printf("%d",queue[i]);
+        } 
+        else{
+            printf("___");
+        }
+        printf("|");
+    }
+    printf("\n");
+    printf("Front=%-6d",front);
+    printf("Rear=%d\n",rear);
 }
-
+int isEmpty(){
+    return (front == -1);
+}
 void insert(int key){
     if(isFull()){
         printf("Queue Overflow\n");
@@ -38,9 +49,11 @@ void insert(int key){
     else
         rear++;
     queue[rear]=key;
+    printf("\nInsert(%d)\n",key);
+    printf("The Queue is:\n");
+    display();
 }
-
-int del(){
+void del(){
     int key;
     if(isEmpty()){
         printf("Queue Underflow\n");
@@ -55,52 +68,11 @@ int del(){
         front=0;
     else
         front++;
-    printf("The deleted element is: %d",key);
-    return key;
+    printf("\nDelete(%d)\n",key);
+    printf("The deleted element is: %d\n",key);
+    printf("The Queue is:\n");
+    display();
 }
-
-void display(){
-    if(isEmpty()){
-        printf("Queue is Empty\n");
-        return;
-    }
-    printf("Queue is:\n");
-    for(int i=front;i<=rear;i++)
-        printf("%d\n",queue[i]);
-    printf("\n");
-}
-
 int main(){
-    int choice,data;
-    do {
-        printf("\n1. Insert");
-        printf("\n2. Delete");
-        printf("\n3. Display");
-        printf("\n4. Peek");
-        printf("\n5. Exit");
-        printf("\n\nEnter your choice: ");
-        scanf("%d",&choice);
-        switch(choice){
-            case 1:
-                printf("Enter the element to push: ");
-                scanf("%d",&data);
-                insert(data);
-                break;
-            case 2:
-                del();
-                break;
-            case 3:
-                display(front);
-                break;
-            case 4:
-                peek(front);
-                break;
-            case 5:
-                exit(1);
-            default:
-                printf("\nWrong Input");
-        }
-        printf("font=%d\trear=%d",front,rear);
-        
-    } while (1);
+    insert(74);insert(27);insert(64);insert(20);del();del();del();insert(41);insert(109);insert(84);del();insert(102);del();del();del();
 }

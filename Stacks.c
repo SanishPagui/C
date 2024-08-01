@@ -2,12 +2,9 @@
 #include<ctype.h>
 #include<stdlib.h>
 #include<string.h>
-
 #define MAX 10
-
 int stack[MAX];
 int top=-1;
-
 void Push(int data){
     if(top==MAX-1){
         printf("Stack Overflow\n");

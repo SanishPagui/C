@@ -30,28 +30,6 @@ struct node *addAtEnd(int data){
     temp->next=NULL;
     return start;
 }
-struct node *insertBefore(int loc,int data){
-    struct node *temp,*p=start;
-    temp=(struct node *)malloc(sizeof(struct node));
-    temp->info=data;
-    for(int i=1;i<loc-1 && p!=NULL;i++)
-        p=p->next;
-    temp->next=p->next;
-    p->next=temp;
-    temp->prev=p;
-    return start;
-}
-struct node *insertAfter(int loc,int data){
-    struct node *temp,*p=start;
-    temp=(struct node *)malloc(sizeof(struct node));
-    temp->info=data;
-    for(int i=1;i<loc && p!=NULL;i++)
-        p=p->next;
-    temp->next=p->next;
-    p->next=temp;
-    temp->prev=p;
-    return start;
-}
 struct node *createList(){
     int n,data;
     printf("Enter the number of node: ");
@@ -78,11 +56,8 @@ void display(){
         printf("%d\t",p->info);
         p=p->next;
     }
-    printf("\n");
 }
 int main(){
     createList();
     display();
-    display(insertBefore(3,10));
-    display(insertAfter(3,11));
 }

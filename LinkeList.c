@@ -145,7 +145,6 @@ void Search(struct node *start, int key) {
 int main() {
     struct node *start1 = NULL, *result = NULL;
     int data, choice, n, loc;
-    char wish;
     do {
         printf("\n1. Create A List");
         printf("\n2. Display The List");
@@ -204,9 +203,7 @@ int main() {
             default:
                 printf("\nWrong Input");
         }
-        printf("\nDo you want to continue? (y/n): ");
-        getchar();
-        scanf("%c", &wish);
-    } while (wish == 'y' || wish == 'Y');
+        
+    } while (1);
     return 0;
 }

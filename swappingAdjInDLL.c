@@ -56,8 +56,27 @@ void display(){
         printf("%d\t",p->info);
         p=p->next;
     }
+    printf("\n");
+}
+void swapping(){
+    struct node *p=start;
+    int temp;
+    if(p->next==NULL){
+        printf("Only one element");
+        return;
+    }
+    while(p!=NULL){
+        temp=p->info;
+        p->info=p->next->info;
+        p->next->info=temp;
+        p=p->next->next;
+    }
+    display();
 }
 int main(){
     createList();
+    pritnf("The Linked list before swapping\n");
     display();
+    pritnf("The Linked list after swapping\n");
+    swapping();
 }

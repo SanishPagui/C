@@ -1,5 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
+struct node{
+    int info;
+    struct node *link;
+};
+struct node *front=NULL,*rear=NULL;
 void display(){
     if(front==NULL){
         printf("Queue Underflow");
@@ -15,11 +20,6 @@ void display(){
         temp=temp->link;
     }
 }
-struct node{
-    int info;
-    struct node *link;
-};
-struct node *front=NULL,*rear=NULL;
 void insert(int key){
     struct node *temp;
     temp=(struct node *)malloc(sizeof(struct node));
@@ -36,13 +36,13 @@ void insert(int key){
     rear=temp;
     display();
 }
-int peek(){
-    if(front==NULL){
-        printf("Queue Underflow");
-        exit(1);
-    }
-    return front->info;
-}
+// int peek(){
+//     if(front==NULL){
+//         printf("Queue Underflow");
+//         exit(1);
+//     }
+//     return front->info;
+// }
 void delete(){
     struct node *temp;
     int key;
@@ -57,5 +57,19 @@ void delete(){
     printf("\nThe deleted element is %d\n",key);
 }
 int main(){
-    insert(85);insert(107);insert(105);insert(25);insert(23);delete();delete();insert(57);delete();delete();delete();delete();insert(13);delete();delete();
+    insert(85);
+    insert(107);
+    insert(105);
+    insert(25);
+    insert(23);
+    delete();
+    delete();
+    insert(57);
+    delete();
+    delete();
+    delete();
+    delete();
+    insert(13);
+    delete();
+    delete();
 }

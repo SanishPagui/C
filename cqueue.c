@@ -25,9 +25,8 @@ void display(){
             else if(queue[i]>=100)
                 printf("%d",queue[i]);
         } 
-        else{
+        else
             printf("___");
-        }
         printf("|");
     }
     printf("\n");

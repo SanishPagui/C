@@ -117,20 +117,20 @@ void DisplayEvaluation(char ch,int top) {
     printf("\n");
 }
 void Collecting() {
-    int uchars[256]={0};
+    int uchars[256]={0};    //256 required because of character range i assumed to be 0-255
     char ch;
     int val;
-    for(int i=0;i<strlen(postfix);i++) {
+    for(int i=0;i<strlen(postfix);i++) {   //used to take input for chars
         ch=postfix[i];
-        if(isalpha(ch) && !uchars[(unsigned char)ch]){
+        if(isalpha(ch) && !uchars[(unsigned char)ch]){    //check if it is char
             printf("Enter the value of %c: ",ch);
             scanf("%d",&val);
             uchars[(unsigned char)ch]=val;
         }
     }
-    for(int i=0;i<strlen(postfix);i++) {
+    for(int i=0;i<strlen(postfix);i++) {    //used to put the values in the
         ch=postfix[i];
-        if(isalpha(ch)){
+        if(isalpha(ch)){    //check if it is char
             lstack[i] = uchars[(unsigned char)ch];
             fstack[i] = (float)uchars[(unsigned char)ch];
         }
@@ -151,8 +151,8 @@ void Evaluation() {
         else{
             b=lstack[top--];
             a=lstack[top--];
-            fb=fstack[top+1];
-            fa=fstack[top+2];
+            fa=fstack[top+1];
+            fb=fstack[top+2];
             switch(ch){
                 case '+':
                     lstack[++top]=a+b;
@@ -160,7 +160,7 @@ void Evaluation() {
                     break;
                 case '-':
                     lstack[++top]=a-b;
-                    fstack[top]=(float)(fa-fb);
+                    fstack[top]=(float)(fa-fa);
                     break;
                 case '*':
                     lstack[++top]=a*b;

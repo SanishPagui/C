@@ -51,7 +51,7 @@ int del(){
         exit(1);
     }
     key=queue[front++];
-    printf("\nDelete(%d)",key);
+    printf("\nDelete()");
     display();
     printf("The deleted element is: %d\n",key);
     return key;

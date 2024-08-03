@@ -1,27 +1,30 @@
 #include<stdio.h>
 #include<stdlib.h>
-struct node {
+void display();
+struct node{
     int info;
     struct node *link;
 };
 struct node *top=NULL;
-void Push(int data) {
+struct node *push(int data){
     struct node *temp;
     temp=(struct node *)malloc(sizeof(struct node));
     temp->info=data;
     temp->link=top;
     top=temp;
+    return top;
 }
-void Pop() {
+void pop(){
     struct node *temp;
-    if (top==NULL) {
-        printf("Stack is empty\n");
+    if(top==NULL){
+        printf("Stack Underflow\n");
         return;
     }
+    int key=top->info;
     temp=top;
-    printf("Popped element: %d\n",temp->info);
     top=top->link;
     free(temp);
+    printf("The deleted element is %d\n",key);
 }
 void display(){
     struct node *p=top;
@@ -64,43 +67,19 @@ void display(){
     }
     printf("\n");
 }
-void Peek() {
-    if (top == NULL) {
-        printf("Stack is empty\n");
-        return;
+int isPalindrome(struct node *top){
+    int num=top->info;
+    
+}
+int main(){
+    int n,data;
+    printf("Enter the number of nodes: ");
+    scanf("%d",&n);
+    printf("Enter the elemnts\n");
+    for(int i=1;i<=n;i++){
+        printf("Eelment %d",i);
+        scanf("%d",&data);
+        push(data);
     }
-    printf("Top element is %d\n", top->info);
+    display();
 }
-int main() {
-    int choice,data;
-    do {
-        printf("\n1. Push");
-        printf("\n2. Pop");
-        printf("\n3. Display");
-        printf("\n4. Peek");
-        printf("\n5. Exit");
-        printf("\n\nEnter your choice: ");
-        scanf("%d",&choice);
-        switch(choice){
-            case 1:
-                printf("Enter the element to push: ");
-                scanf("%d",&data);
-                Push(data);
-                break;
-            case 2:
-                Pop(top);
-                break;
-            case 3:
-                display(top);
-                break;
-            case 4:
-                Peek(top);
-                break;
-            case 5:
-                exit(1);
-            default:
-                printf("\nWrong Input");
-        }
-    } while (1);
-}
-

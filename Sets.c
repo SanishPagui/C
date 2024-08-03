@@ -6,7 +6,6 @@ struct node *AddAtBeg(struct node *,int);
 struct node *AddAtEnd(struct node *,int);
 int Equal(struct node *,int);
 struct node *Union(struct node *,struct node *);
-struct node *SortList(struct node *);
 struct node{
     int info;
     struct node *link;
@@ -36,82 +35,70 @@ struct node *AddAtBeg(struct node *start,int data){
     start=temp;
     return start;
 };
-struct node *AddAtEnd(struct node *start, int data) {
-    struct node *p, *temp;
-    temp = (struct node *)malloc(sizeof(struct node));
-    temp->info = data;
-    temp->link = NULL;
-    if (start == NULL)
-        start = temp;
-    else{
-        p = start;
-        while (p->link != NULL)
-            p = p->link;
-        p->link = temp;
-    }
-    return start;
-}
-struct node *SortList(struct node *start){
-    struct node *p,*q;
-    int temp;
-    for(p=start;p!=NULL;p=p->link){
-        for (q=p->link;q!=NULL;q=q->link){
-            if (p->info>q->info){
-                temp=p->info;
-                p->info=q->info;
-                q->info=temp;
-            }
+struct node *AddAtEnd(struct node *start, int data){
+        if(Equal(start,data))
+            return start;
+        struct node *p=start,*temp;
+        temp=(struct node *)malloc(sizeof(struct node));
+        temp->info=data;
+        temp->link=NULL;
+        if(start==NULL)
+            return temp;
+        if (start->info>data){
+            temp->link=start;
+            return temp;
         }
-    }
-    return start;
+        while(p->link!=NULL && p->link->info<data)
+            p=p->link;
+        temp->link=p->link;
+        p->link=temp;
+        return start;
 }
 struct node *Union(struct node *start1,struct node *start2){
     struct node *p=start1,*temp=NULL;
     while(p!=NULL){
-        if(!Equal(temp,p->info))
-            temp=AddAtEnd(temp,p->info);
+        temp=AddAtEnd(temp,p->info);
         p=p->link;
     }
     p=start2;
     while(p!=NULL){
-        if(!Equal(temp,p->info))
-            temp=AddAtEnd(temp,p->info);
+        temp=AddAtEnd(temp,p->info);
         p=p->link;
     }
     return temp;
 }
 struct node *Intersection(struct node *start1, struct node *start2) {
-    struct node *temp = NULL, *p = start1, *q;
-    while (p != NULL) {
-        q = start2;
-        while (q != NULL) {
-            if (p->info == q->info) {
-                temp = AddAtEnd(temp, p->info);
+    struct node *temp=NULL,*p=start1,*q;
+    while(p!=NULL){
+        q=start2;
+        while(q!=NULL) {
+            if(p->info==q->info){
+                temp=AddAtEnd(temp,p->info);
                 break;
             }
-            q = q->link;
+            q=q->link;
         }
-        p = p->link;
+        p=p->link;
     }
     return temp;
 }
 struct node *Subtraction(struct node *start1, struct node *start2){
-    struct node *temp = NULL, *p1 = start1, *p2;
+    struct node *temp=NULL,*p1=start1,*p2;
     int found;
-    while (p1 != NULL){
-        p2 = start2;
-        found = 0;
-        while (p2 != NULL){
-            if (p1->info == p2->info){
-                found = 1;
+    while (p1!=NULL){
+        p2=start2;
+        found=0;
+        while(p2!=NULL){
+            if(p1->info==p2->info){
+                found=1;
                 break;
             }
-            p2 = p2->link;
+            p2=p2->link;
         }
-        if (!found){
-            temp = AddAtEnd(temp, p1->info);
+        if(!found){
+            temp=AddAtEnd(temp, p1->info);
         }
-        p1 = p1->link;
+        p1=p1->link;
     }
     return temp;
 }
@@ -156,14 +143,15 @@ int main(){
     Display(start2);
     printf("\n\nL1 u L2: ");
     result=Union(start1,start2);
-    Display(SortList(result));
+    Display(result);
     printf("\n\nL1 n L2: ");
     result=Intersection(start1,start2);
-    Display(SortList(result));
+    Display(result);
     printf("\n\nSubtraction(L1-L2): ");
     result=Subtraction(start1,start2);
-    Display(SortList(result));
+    Display(result);
     printf("\n\nSubtraction(L2-L1): ");
     result=Subtraction(start2,start1);
-    Display(SortList(result));
+    Display(result);
+    
 }

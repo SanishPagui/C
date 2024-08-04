@@ -67,19 +67,61 @@ void display(){
     }
     printf("\n");
 }
-int isPalindrome(struct node *top){
+int compare(struct node *temp1,struct node *temp2){
+    struct node *p=temp1,*q=temp2;
+    while(p && q){
+        if(p->info!=q->info)
+            return 0;
+        p=p->link;
+        q=q->link;
+    }
+    if(p==NULL && q==NULL)
+        return 1;
+    return 0;
+}
+struct node *reverse(struct node *secondhead){
+    struct node *prev=NULL,*p=secondhead,*next;
+    while(p!=NULL){
+        next=p->link;
+        p->link=prev;
+        prev=p;
+        p=next;
+    }
+    return prev;
+}
+int isPalindrome(){
+    if(top->link==NULL)
+        return 1;
     int num=top->info;
-    
+    struct node *p=top,*q=top,*temp=NULL,*secondhalf=NULL,*middle=NULL;
+    while(p!=NULL && p->link!=NULL){
+        temp=q;
+        q=q->link;
+        p=p->link->link;
+    }
+    if(p!=NULL){
+        middle=q;
+        q=q->link;
+    }
+    secondhalf=q;
+    temp->link=NULL;
+    secondhalf=reverse(secondhalf);
+    int result=compare(top,secondhalf);
+    return result;
 }
 int main(){
     int n,data;
     printf("Enter the number of nodes: ");
     scanf("%d",&n);
-    printf("Enter the elemnts\n");
+    printf("Enter the elements\n");
     for(int i=1;i<=n;i++){
-        printf("Eelment %d",i);
+        printf("Element %d: ",i);
         scanf("%d",&data);
         push(data);
     }
     display();
+    if(isPalindrome())
+        printf("Palindrome");
+    else
+        printf("Not Palindrome");
 }

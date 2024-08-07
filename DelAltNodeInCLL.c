@@ -38,13 +38,46 @@ struct node *createList(){
     return last;
 }
 void display(){
-    struct node *p=last->link;
-    printf("\n");
+    struct node *p;
+    printf("    ");
+    p=last->link;
     do{
-        printf("%d\t",p->info);
+        printf("___ ________     ");
         p=p->link;
     }while(p!=last->link);
-    printf("\n");
+    printf("\n-->|");
+    p=last->link;
+    do{
+        if(p->info>=0 && p->info<10)
+            printf("__%d|%lx|-->|",p->info,p->link); 
+        else if(p->info>=10 && p->info<100)
+            printf("_%d|%lx|-->|",p->info,p->link); 
+        else
+            printf("%d|%lx|-->|",p->info,p->link);
+        p=p->link;
+    }while(p!=last->link);
+    printf("\n|   ");
+    p=last->link;
+    do{
+        p=p->link;
+        if(p==last->link){
+            printf("   ");
+            printf("%lx",p);
+            printf("     ");
+            break;
+        }
+        printf("   ");
+        printf("%lx",p);
+        printf("      ");
+    }while(p!=last->link);
+    printf("|");
+    printf("\n|");
+    p=last->link;
+    do{
+        printf("_________________");
+        p=p->link;
+    }while(p!=last->link);
+    printf("__|\n");
 }
 void deleteAltNodes(){
     struct node *p,*temp;

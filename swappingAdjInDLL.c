@@ -48,34 +48,56 @@ struct node *createList(){
 }
 void display(){
     struct node *p;
-    printf(" ________    ");
+    printf(" ____    ");
     for(p=start;p!=NULL;p=p->next)
-        printf(" ___ ________    ");
+        printf(" ____ ___ ____    ");
     printf("\n|");
-    printf("%lx|-->|",start);
+    printf("    |   ");
     for(p=start;p!=NULL;p=p->next){
         if(p->next==NULL){
-            printf("__%d|__NULL__|-->",p->info,p->next); 
+            printf("|    |   |    |   ");
+            break;
+        }
+        printf("|    |   |    |-->");
+    }
+    printf("\n|");
+    printf("%04hhX|-->|",start);
+    for(p=start;p!=NULL;p=p->next){
+        if(p->prev==NULL){
+            printf("NULL|%3d|%04hhX|   |",p->info,p->next); 
+            continue;
+        }
+        if(p->next==NULL){
+            printf("%04hhX|%3d|NULL|   ",p->prev,p->info); 
             break;
         }
         if(p->info>=0 && p->info<10)
-            printf("__%d|%lx|-->|",p->info,p->next); 
+            printf("%04hhX|%3d|%04hhX|   |",p->prev,p->info,p->next); 
         else if(p->info>=10 && p->info<100)
-            printf("_%d|%lx|-->|",p->info,p->next); 
+            printf("%04hhX|%d|%04hhX|   |",p->prev,p->info,p->next); 
         else
-            printf("%d|%lx|-->|",p->info,p->next);
+            printf("%02hhX|%d|%02hhX|   |",p->prev,p->info,p->next);
     }
-    printf("NULL\n");
+    printf("\n|");
+    printf("____|");
+    for(p=start;p!=NULL;p=p->next){
+        if(p->prev==NULL){
+            printf("   |____|___|____|");
+            continue;
+        }
+        printf("<--|____|___|____|");
+    }
+    printf("\n");
     int i=0;
-    while(i<13){
+    while(i<9){
         printf(" ");
         i++;
     }
     p=start;
     while(p!=NULL){
-        printf("   ");
-        printf("%lx",p);
-        printf("      ");
+        printf("     ");
+        printf("%04hhX",p);
+        printf("         ");
         p=p->next;
     }
     printf("\n");

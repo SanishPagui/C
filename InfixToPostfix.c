@@ -134,7 +134,7 @@ void Collecting() {
             lstack[i] = uchars[(unsigned char)ch];
             fstack[i] = (float)uchars[(unsigned char)ch];
         }
-    }
+    } 
 }
 void Evaluation() {
     top=-1;

@@ -58,7 +58,7 @@ struct node *createList(){
     scanf("%d",&n);
     if(n==0)
         return start;
-    printf("Enter the elments\nElement 1: ");
+    printf("Enter the elements\nElement 1: ");
     scanf("%d",&data);
     start=addAtBeg(data);
     for(int i=2;i<=n;i++){
@@ -69,13 +69,57 @@ struct node *createList(){
     return start;
 }
 void display(){
-    struct node *p=start;
-    if(start==NULL){
-        printf("List is empty");
-        return ;
+    struct node *p;
+    printf(" ____    ");
+    for(p=start;p!=NULL;p=p->next)
+        printf(" ____ ___ ____    ");
+    printf("\n|");
+    printf("    |   ");
+    for(p=start;p!=NULL;p=p->next){
+        if(p->next==NULL){
+            printf("|    |   |    |   ");
+            break;
+        }
+        printf("|    |   |    |-->");
     }
+    printf("\n|");
+    printf("%04hhX|-->|",start);
+    for(p=start;p!=NULL;p=p->next){
+        if(p->prev==NULL){
+            printf("NULL|%3d|%04hhX|   |",p->info,p->next); 
+            continue;
+        }
+        if(p->next==NULL){
+            printf("%04hhX|%3d|NULL|   ",p->prev,p->info); 
+            break;
+        }
+        if(p->info>=0 && p->info<10)
+            printf("%04hhX|%3d|%04hhX|   |",p->prev,p->info,p->next); 
+        else if(p->info>=10 && p->info<100)
+            printf("%04hhX|%d|%04hhX|   |",p->prev,p->info,p->next); 
+        else
+            printf("%02hhX|%d|%02hhX|   |",p->prev,p->info,p->next);
+    }
+    printf("\n|");
+    printf("____|");
+    for(p=start;p!=NULL;p=p->next){
+        if(p->prev==NULL){
+            printf("   |____|___|____|");
+            continue;
+        }
+        printf("<--|____|___|____|");
+    }
+    printf("\n");
+    int i=0;
+    while(i<9){
+        printf(" ");
+        i++;
+    }
+    p=start;
     while(p!=NULL){
-        printf("%d\t",p->info);
+        printf("     ");
+        printf("%04hhX",p);
+        printf("         ");
         p=p->next;
     }
     printf("\n");
@@ -83,6 +127,4 @@ void display(){
 int main(){
     createList();
     display();
-    display(insertBefore(3,10));
-    display(insertAfter(3,11));
 }

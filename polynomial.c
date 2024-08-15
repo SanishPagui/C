@@ -2,104 +2,102 @@
 #include <stdlib.h>
 struct node{
     int coeff;
-    int exp;
-    struct node *next;
+    int expo;
+    struct node *link;
 };
-struct node* create(struct node *start){
-    struct node *temp,*p=NULL;
-    int n,i;
-    printf("Enter the number of terms: ");
-    scanf("%d",&n);
-    printf("Enter the coeff and exp of each term:\n");
+struct node *insert(struct node *start,float co,int ex){
+    struct node *temp,*ptr;
     temp=(struct node *)malloc(sizeof(struct node));
-    scanf("%d %d",&temp->coeff,&temp->exp);
-    temp->next=NULL;
-    start=temp;
-    p=start;
-    for(i=1;i<n;i++){
-        temp=(struct node *)malloc(sizeof(struct node));
-        scanf("%d %d",&temp->coeff,&temp->exp);
-        temp->next=NULL;
-        while (p->next!=NULL && p->next->exp>temp->exp){
-            p=p->next;
-        }
-        temp->next=p->next;
-        p->next=temp;
-        p=start;
+    temp->coeff=co;
+    temp->expo=ex;
+    if(start==NULL || start->expo<ex){
+        temp->link=start;
+        start=temp;
+    }
+    else{
+        ptr=start;
+        while(ptr->link!=NULL && ptr->link->expo>ex)
+            ptr=ptr->link;
+        temp->link=ptr->link;
+        ptr->link=temp;
     }
     return start;
 }
-void display(struct node *p){
-    while (p!=NULL){
-        if(p->next!=NULL){
-            printf("%dx^%d + ",p->coeff,p->exp);
+struct node *insertNew(struct node *start,float co,int ex){
+    struct node *temp,*ptr;
+    temp=(struct node *)malloc(sizeof(struct node));
+    temp->coeff=co;
+    temp->expo=ex;
+    temp->link=NULL;
+    if(start==NULL)
+        start=temp;
+    else{
+        ptr=start;
+        while(ptr->link!=NULL)
+            ptr=ptr->link;
+        ptr->link=temp;
+    }
+    return start;
+}
+struct node *add(struct node *start1,struct node *start2){
+    struct node *start3=NULL,*p=start1,*q=start2;
+    while(p!=NULL && q!=NULL){
+        int sum;
+        if(p->expo==q->expo){
+            sum=p->coeff+q->coeff;
+            start3=insertNew(start3,sum,p->expo);
+            p=p->link;
+            q=q->link;
+        }
+        else if(p->expo>q->expo){
+            start3=insert(start3,p->coeff,p->expo);
+            p=p->link;
         }
         else{
-            printf("%dx^%d",p->coeff,p->exp);
+            start3=insert(start3,q->coeff,q->expo);
+            q=q->link;
         }
-        p=p->next;
+    }
+    while(p!=NULL){
+        start3=insert(start3,p->coeff,p->expo);
+        p=p->link;
+    }
+    while(q!=NULL){
+        start3=insert(start3,q->coeff,q->expo);
+        q=q->link;
+    }
+    return start3;
+}
+struct node *createList(struct node *start){
+    int n,i,ex,co;
+    printf("Enter the number of terms: ");
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++){
+        printf("Coefficient: ");
+        scanf("%d",&co);
+        printf("Exponent: ");
+        scanf("%d",&ex);
+        start=insert(start,co,ex);
+    }
+    return start;
+}
+void display(struct node *start){
+    struct node *p=start;
+    while(p!=NULL){
+        printf("%dx^%d",p->coeff,p->expo);
+        if(p->link==NULL)
+            break;
+        printf(" + ");
+        p=p->link;
     }
     printf("\n");
 }
-struct node* add(struct node *p, struct node *q){
-    struct node *result=NULL,*last=NULL;
-    while(p!=NULL && q!=NULL){
-        struct node *temp=(struct node *)malloc(sizeof(struct node));
-        if(p->exp>q->exp){
-            temp->coeff=p->coeff;
-            temp->exp=p->exp;
-            p=p->next;
-        }
-        else if(p->exp<q->exp){
-            temp->coeff=q->coeff;
-            temp->exp=q->exp;
-            q=q->next;
-        }
-        else{
-            temp->coeff=p->coeff + q->coeff;
-            temp->exp=p->exp;
-            p=p->next;
-            q=q->next;
-        }
-        temp->next=NULL;
-        if (result == NULL){
-            result=last=temp;
-        }
-        else{
-            last->next=temp;
-            last=temp;
-        }
-    }
-    while (p != NULL){
-        struct node *temp=(struct node *)malloc(sizeof(struct node));
-        temp->coeff=p->coeff;
-        temp->exp=p->exp;
-        temp->next=NULL;
-        last->next=temp;
-        last=temp;
-        p=p->next;
-    }
-    while (q != NULL){
-        struct node *temp=(struct node *)malloc(sizeof(struct node));
-        temp->coeff=q->coeff;
-        temp->exp=q->exp;
-        temp->next=NULL;
-        last->next=temp;
-        last=temp;
-        q=q->next;
-    }
-    return result;
-}
 int main(){
-    struct node *poly1=NULL, *poly2=NULL, *poly3=NULL;
-    poly1=create(poly1);
-    poly2=create(poly2);
-    printf("First polynomial: ");
-    display(poly1);
-    printf("Second polynomial: ");
-    display(poly2);
-    poly3=add(poly1, poly2);
-    printf("Resultant polynomial: ");
-    display(poly3);
-    return 0;
+    struct node *start1=NULL,*start2=NULL,*result=NULL;
+    start1=createList(start1);
+    start2=createList(start2);
+    display(start1);
+    display(start2);
+    result=add(start1,start2);
+    display(result);
 }

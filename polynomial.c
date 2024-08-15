@@ -6,26 +6,26 @@ struct node{
     struct node *next;
 };
 struct node* create(struct node *start){
-    struct node *t,*q=NULL;
+    struct node *temp,*p=NULL;
     int n,i;
     printf("Enter the number of terms: ");
     scanf("%d",&n);
     printf("Enter the coeff and exp of each term:\n");
-    t=(struct node *)malloc(sizeof(struct node));
-    scanf("%d %d",&t->coeff,&t->exp);
-    t->next=NULL;
-    start=t;
-    q=start;
+    temp=(struct node *)malloc(sizeof(struct node));
+    scanf("%d %d",&temp->coeff,&temp->exp);
+    temp->next=NULL;
+    start=temp;
+    p=start;
     for(i=1;i<n;i++){
-        t=(struct node *)malloc(sizeof(struct node));
-        scanf("%d %d",&t->coeff,&t->exp);
-        t->next=NULL;
-        while (q->next!=NULL && q->next->exp>t->exp){
-            q=q->next;
+        temp=(struct node *)malloc(sizeof(struct node));
+        scanf("%d %d",&temp->coeff,&temp->exp);
+        temp->next=NULL;
+        while (p->next!=NULL && p->next->exp>temp->exp){
+            p=p->next;
         }
-        t->next=q->next;
-        q->next=t;
-        q=start;
+        temp->next=p->next;
+        p->next=temp;
+        p=start;
     }
     return start;
 }
@@ -44,48 +44,48 @@ void display(struct node *p){
 struct node* add(struct node *p, struct node *q){
     struct node *result=NULL,*last=NULL;
     while(p!=NULL && q!=NULL){
-        struct node *t=(struct node *)malloc(sizeof(struct node));
+        struct node *temp=(struct node *)malloc(sizeof(struct node));
         if(p->exp>q->exp){
-            t->coeff=p->coeff;
-            t->exp=p->exp;
+            temp->coeff=p->coeff;
+            temp->exp=p->exp;
             p=p->next;
         }
         else if(p->exp<q->exp){
-            t->coeff=q->coeff;
-            t->exp=q->exp;
+            temp->coeff=q->coeff;
+            temp->exp=q->exp;
             q=q->next;
         }
         else{
-            t->coeff=p->coeff + q->coeff;
-            t->exp=p->exp;
+            temp->coeff=p->coeff + q->coeff;
+            temp->exp=p->exp;
             p=p->next;
             q=q->next;
         }
-        t->next=NULL;
+        temp->next=NULL;
         if (result == NULL){
-            result=last=t;
+            result=last=temp;
         }
         else{
-            last->next=t;
-            last=t;
+            last->next=temp;
+            last=temp;
         }
     }
     while (p != NULL){
-        struct node *t=(struct node *)malloc(sizeof(struct node));
-        t->coeff=p->coeff;
-        t->exp=p->exp;
-        t->next=NULL;
-        last->next=t;
-        last=t;
+        struct node *temp=(struct node *)malloc(sizeof(struct node));
+        temp->coeff=p->coeff;
+        temp->exp=p->exp;
+        temp->next=NULL;
+        last->next=temp;
+        last=temp;
         p=p->next;
     }
     while (q != NULL){
-        struct node *t=(struct node *)malloc(sizeof(struct node));
-        t->coeff=q->coeff;
-        t->exp=q->exp;
-        t->next=NULL;
-        last->next=t;
-        last=t;
+        struct node *temp=(struct node *)malloc(sizeof(struct node));
+        temp->coeff=q->coeff;
+        temp->exp=q->exp;
+        temp->next=NULL;
+        last->next=temp;
+        last=temp;
         q=q->next;
     }
     return result;

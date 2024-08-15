@@ -6,19 +6,38 @@ struct node{
 };
 struct node *front=NULL,*rear=NULL;
 void display(){
-    if(front==NULL){
-        printf("Queue Underflow");
-        return;
+    struct node *p;
+    printf(" ________    ");
+    for(p=front;p!=NULL;p=p->link)
+        printf(" ___ ________    ");
+    printf("\n|");
+    printf("%lx|-->|",front);
+    for(p=front;p!=NULL;p=p->link){
+        if(p->link==NULL){
+            printf("__%d|__NULL__|-->",p->info,p->link); 
+            break;
+        }
+        if(p->info>=0 && p->info<10)
+            printf("__%d|%lx|-->|",p->info,p->link); 
+        else if(p->info>=10 && p->info<100)
+            printf("_%d|%lx|-->|",p->info,p->link); 
+        else
+            printf("%d|%lx|-->|",p->info,p->link);
     }
-    struct node *temp=front;
+    printf("NULL\n");
+    int i=0;
+    while(i<13){
+        printf(" ");
+        i++;
+    }
+    p=front;
+    while(p!=NULL){
+        printf("   ");
+        printf("%lx",p);
+        printf("      ");
+        p=p->link;
+    }
     printf("\n");
-    for(temp=front;temp!=NULL;temp=temp->link){
-        printf(" ___");
-    }
-    while(temp!=NULL){
-        printf("%d\t",temp->info);
-        temp=temp->link;
-    }
 }
 void insert(int key){
     struct node *temp;
@@ -55,6 +74,7 @@ void delete(){
     front=front->link;
     free(temp);
     printf("\nThe deleted element is %d\n",key);
+    display();
 }
 int main(){
     insert(85);

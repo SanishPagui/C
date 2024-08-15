@@ -49,7 +49,6 @@ struct node *AddAtEnd(struct node *start, int data) {
     }
     while (p->link != NULL)
         p = p->link;
-
     p->link = temp;
     return start;
 }

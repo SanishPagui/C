@@ -5,7 +5,7 @@ struct node{
     int info;
     struct node *next;
 };
-struct node *start;
+struct node *start=NULL;
 struct node *addAtBeg(int data){
     struct node *temp;
     temp=(struct node *)malloc(sizeof(struct node));
@@ -23,31 +23,9 @@ struct node *addAtEnd(int data){
     struct node *temp,*p=start;
     temp=(struct node *)malloc(sizeof(struct node));
     temp->info=data;
+    temp->next=NULL;
     while(p->next!=NULL)
         p=p->next;
-    p->next=temp;
-    temp->prev=p;
-    temp->next=NULL;
-    return start;
-}
-struct node *insertBefore(int loc,int data){
-    struct node *temp,*p=start;
-    temp=(struct node *)malloc(sizeof(struct node));
-    temp->info=data;
-    for(int i=1;i<loc-1 && p!=NULL;i++)
-        p=p->next;
-    temp->next=p->next;
-    p->next=temp;
-    temp->prev=p;
-    return start;
-}
-struct node *insertAfter(int loc,int data){
-    struct node *temp,*p=start;
-    temp=(struct node *)malloc(sizeof(struct node));
-    temp->info=data;
-    for(int i=1;i<loc && p!=NULL;i++)
-        p=p->next;
-    temp->next=p->next;
     p->next=temp;
     temp->prev=p;
     return start;
@@ -58,7 +36,7 @@ struct node *createList(){
     scanf("%d",&n);
     if(n==0)
         return start;
-    printf("Enter the elements\nElement 1: ");
+    printf("Enter the elments\nElement 1: ");
     scanf("%d",&data);
     start=addAtBeg(data);
     for(int i=2;i<=n;i++){
@@ -124,54 +102,34 @@ void display(){
     }
     printf("\n");
 }
-int main(){
-    int choice, data, loc;
-    while (1) {
-        printf("\n1. Create List\n");
-        printf("2. Add at Beginning\n");
-        printf("3. Add at End\n");
-        printf("4. Insert Before\n");
-        printf("5. Insert After\n");
-        printf("6. Display List\n");
-        printf("7. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-        switch(choice){
-            case 1:
-                start = createList();
-                break;
-            case 2:
-                printf("Enter data to insert at beginning: ");
-                scanf("%d", &data);
-                start = addAtBeg(data);
-                break;
-            case 3:
-                printf("Enter data to insert at end: ");
-                scanf("%d", &data);
-                start = addAtEnd(data);
-                break;
-            case 4:
-                printf("Enter location before which to insert: ");
-                scanf("%d", &loc);
-                printf("Enter data to insert: ");
-                scanf("%d", &data);
-                start = insertBefore(loc, data);
-                break;
-            case 5:
-                printf("Enter location after which to insert: ");
-                scanf("%d", &loc);
-                printf("Enter data to insert: ");
-                scanf("%d", &data);
-                start = insertAfter(loc, data);
-                break;
-            case 6:
-                display();
-                break;
-            case 7:
-                exit(0);
-            default:
-                printf("Invalid choice! Please try again.\n");
-        }
+void swapping(){
+    struct node *p=start,*prev=NULL,*q=start->next;
+    while(q!=NULL){
+        p->next=q->next;
+        if(p->next!=NULL)
+            p->next->prev=p;
+        q->prev=prev;
+        q->next=p;
+        p->prev=q;
+        if(prev==NULL)
+            start=q;
+        else
+            prev->next=q;
+        prev=p;
+        p=p->next;
+        if(p!=NULL)
+            q=p->next;
+        else
+            q=NULL;
     }
-    return 0;
+    if(p!=NULL)
+        p->next=NULL;
+}
+int main(){
+    createList();
+    printf("The Linked list before swapping\n");
+    display();
+    printf("The Linked list after swapping\n");
+    swapping();
+    display();
 }

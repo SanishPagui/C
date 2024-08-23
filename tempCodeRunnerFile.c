@@ -45,7 +45,7 @@ void display(){
             printf("NULL");
         if(p->link==NULL){
             printf("|");
-            printf("_%d_|__NULL__|",p->info);
+            printf("_%d_|___%lx___|",p->info,p->link);
             break;
         }
         printf("|");

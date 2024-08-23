@@ -96,12 +96,12 @@ int isPalindrome(){
     if(front->link==NULL)
         return 1;
     struct node *p=front,*firsthalf=front,*temp=front,*secondhalf,*q=front,*middle=NULL;
-    while(p!=NULL && p->link!=NULL){   //to find the middle
+    while(p!=NULL && p->link!=NULL){
         temp=q;
         q=q->link;
         p=p->link->link;
     }
-    if(p!=NULL){   //for odd length it will not be null
+    if(p!=NULL){
         middle=q;
         q=q->link;
     }
@@ -120,26 +120,3 @@ int main(){
     else
         printf("Not Palindrome");
 }
-// int isPalindrome(){
-//     if(front->link==NULL)
-//         return 1;
-//     struct node *p=front;
-//     int count=0;
-//     while(p!=NULL){
-//         count++;
-//         p=p->link;
-//     }
-//     int *a=(int *)malloc(count*sizeof(int));
-//     p=front;
-//     for(int i=0;i<count;i++){
-//         a[i]=p->info;
-//         p=p->link;
-//     }
-//     for(int i=0;i<count/2;i++){
-//         if(a[i]!=a[count-1-i]){
-
-//             return 0;
-//         }
-//     }
-//     return 1;
-// }

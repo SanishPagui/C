@@ -80,34 +80,10 @@ void peek(){
     printf("The first element in the queue is: %d\n",queue[front]);
 }
 int main(){
-    int data,choice;
-    do{
-        printf("\n1. Insert");
-        printf("\n2. Delete");
-        printf("\n3. Display");
-        printf("\n4. Peek");
-        printf("\n5. Exit");
-        printf("\n\nEnter your choice: ");
-        scanf("%d",&choice);
-        switch(choice){
-            case 1:
-                printf("Enter the element to push: ");
-                scanf("%d",&data);
-                insert(data);
-                break;
-            case 2:
-                del();
-                break;
-            case 3:
-                display();
-                break;
-            case 4:
-                peek();
-                break;
-            case 5:
-                exit(1);
-            default:
-                printf("\nWrong Input");
-        }
-    } while (1);
+    insert(74);insert(27);insert(64);insert(20);
+    del();del();del();
+    insert(41);insert(109);insert(84);
+    del();
+    insert(102);
+    del();del();del();
 }

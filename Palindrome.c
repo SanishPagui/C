@@ -1,76 +1,76 @@
-#include<stdio.h>
-#include<stdlib.h>
-struct node{
-    int info;
-    struct node *link;
+#include <stdio.h>
+#include <limits.h>
+#include <stdlib.h>
+struct node {
+    char info;
+    struct node* link;
 };
-struct node *front=NULL,*rear=NULL,*top=NULL;
-struct node* insertQueue(int data){
-    struct node *temp=(struct node*)malloc(sizeof(struct node));
-    if(temp==NULL){
-        printf("Overflow\n");
-        return rear;
+struct node* top = NULL,* front = NULL,* rear = NULL;
+struct node;
+struct node;
+void push(char item) {
+    struct node* tmp;
+    tmp = (struct node *)malloc(sizeof(struct node));
+    if (tmp == NULL) {
+        printf("Stack Overflow\n");
+        return;
     }
-    temp->info=data;
-    temp->link=NULL;
-    if(rear==NULL)
-        front=temp;
-    else    
-        rear->link=temp;
-    rear=temp;
-    return rear;
+    tmp->info = item;
+    tmp->link = top;
+    top = tmp;
 }
-struct node* pushStack(int data){
-    struct node *temp=(struct node*)malloc(sizeof(struct node));
-    temp->info=data;
-    temp->link=top;
-    top=temp;
-    return top;
+char pop() {
+    if (top == NULL) {
+        printf("Stack Underflow\n");
+        return CHAR_MIN;
+    }
+    char item = top->info;
+    struct node* p = top;
+    top = top->link;
+    free(p);
+    return item;
 }
-struct node* reverse(struct node *head){
-    struct node *prev=NULL,*current=head,*next;
-    while(current!=NULL){
-        next=current->link;
-        current->link=prev;
-        prev=current;
-        current=next;
+void insert(char data) {
+    struct node* tmp = (struct node*)malloc(sizeof(struct node));
+    if (tmp == NULL) {
+        printf("Queue Overflow\n");
+        return;
     }
-    return prev;
+    tmp->info = data;
+    tmp->link = NULL;
+    if (front == NULL) {
+        front = tmp;
+    } else {
+        rear->link = tmp;
+    }
+    rear = tmp;
 }
-int compare(struct node *list1,struct node *list2){
-    struct node *p=list1,*q=list2;
-    while(p&&q){
-        if(p->info!=q->info)
-            return 0;
-        p=p->link;
-        q=q->link;
+char delete() {
+    if (front == NULL) {
+        printf("Queue Underflow\n");
+        return CHAR_MIN;
     }
-    return (p==NULL&&q==NULL);
+    struct node* tmp = front;
+    char data = tmp->info;
+    front = front->link;
+    free(tmp);
+    return data;
 }
-int isPalindrome(struct node *head){
-    if(head==NULL||head->link==NULL)
-        return 1;
-    struct node *second=head,*first=head,*prev=NULL;
-    struct node *second_half=NULL,*middle=NULL;
-    while(first!=NULL&&first->link!=NULL){
-        prev=second;
-        second=second->link;
-        first=first->link->link;
+int palindrome(const char str[]) {
+    int i = 0;
+    while (str[i] != '\0') {
+        insert(str[i]);
+        push(str[i]);
+        i++;
     }
-    if(first!=NULL){
-        middle=second;
-        second=second->link;
+    while(top!=NULL && front!=NULL){
+        char a=pop();
+        char b=delete();
+        if (a!=b){
+            return 0;   
+        }
     }
-    second_half=reverse(second);
-    prev->link=NULL;
-    int result=compare(head,second_half);
-    second_half=reverse(second_half);
-    if(middle!=NULL){
-        prev->link=middle;
-        middle->link=second_half;
-    }else
-        prev->link=second_half;
-    return result;
+    return 1;
 }
 void displayQueue(){
     struct node *p;
@@ -81,15 +81,10 @@ void displayQueue(){
     printf("%lx|-->|",front);
     for(p=front;p!=NULL;p=p->link){
         if(p->link==NULL){
-            printf("__%d|__NULL__|",p->info); 
+            printf("__%c|__NULL__|",p->info); 
             break;
         }
-        if(p->info>=0 && p->info<10)
-            printf("__%d|%lx|-->|",p->info,p->link); 
-        else if(p->info>=10 && p->info<100)
-            printf("_%d|%lx|-->|",p->info,p->link); 
-        else
-            printf("%d|%lx|-->|",p->info,p->link);
+        printf("_%c_|%lx|-->|",p->info,p->link);
     }
     printf("\n");
     int i=0;
@@ -123,11 +118,11 @@ void displayStack(){
     while(p!=NULL){
         if(p->link==NULL){
             printf("|");
-            printf("_%d_|__NULL__|",p->info);
+            printf("_%c_|__NULL__|",p->info);
             break;
         }
         printf("|");
-        printf("_%d_|%lx|-->",p->info,p->link);
+        printf("_%c_|%lx|-->",p->info,p->link);
         p=p->link;  
     }
     printf("\n");
@@ -145,24 +140,27 @@ void displayStack(){
     }
     printf("\n");
 }
-
-int main(){
-    int n,data;
-    printf("Enter the number of elements: ");
-    scanf("%d",&n);
-    printf("Enter the elements:\n");
-    for(int i=1;i<=n;i++){
-        printf("Element %d: ",i);
-        scanf("%d",&data);
-        insertQueue(data);
-        pushStack(data);
+int main() {
+    char str[100];
+    printf("Enter a string: ");
+    scanf("%s", str);
+    int i=0;
+    while (str[i] != '\0') {
+        insert(str[i]);
+        push(str[i]);
+        i++;
     }
-    printf("The numbers in Queue:\n");
-    displayQueue();
-    printf("The numbers in Stack:\n");
-    displayStack();
-    if(isPalindrome(front)&&isPalindrome(top))
-        printf("Palindrome\n");
-    else
-        printf("Not a Palindrome\n");
+    printf("STACK:\n");
+    displayStack(str);
+    printf("Queue:\n");
+    displayQueue(str);
+    while(top!=NULL && front!=NULL){
+        char a=pop();
+        char b=delete();
+    }
+    if (palindrome(str)){
+        printf("%s is a palindrome\n", str);
+    } else {
+        printf("%s is not a palindrome\n", str);
+    }
 }

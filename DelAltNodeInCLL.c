@@ -26,6 +26,8 @@ struct node *createList(){
     int data,n;
     printf("Enter the number of nodes: ");
     scanf("%d",&n);
+    if(n==0)
+        return last;
     printf("Enter the elements\n");
     printf("Element 1: ");
     scanf("%d",&data);

@@ -80,10 +80,5 @@ void peek(){
     printf("The first element in the queue is: %d\n",queue[front]);
 }
 int main(){
-    insert(74);insert(27);insert(64);insert(20);
-    del();del();del();
-    insert(41);insert(109);insert(84);
-    del();
-    insert(102);
-    del();del();del();
+    insert(1);insert(1);insert(1);insert(1);insert(1);
 }

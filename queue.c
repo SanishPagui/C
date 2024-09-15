@@ -29,6 +29,8 @@ void display(){
         printf("|");
     }
     printf("\n");
+    printf("Front=%d\t    Rear=%d",front,rear);
+    printf("\n");
 }
 void insert(int key){
     if(rear == MAX-1){
@@ -45,7 +47,6 @@ void insert(int key){
 int del(){
     int key;
     if(front == -1 || front==rear+1){
-        printf("\nDelete(%d)",key);
         printf("\nQueue Underflow\n");
         exit(1);
     }
@@ -63,9 +64,5 @@ void peek(){
     printf("The first element in the queue is: %d\n",queue[front]);
 }
 int main(){
-    insert(85);insert(107);insert(105);insert(25);insert(23);
-    del();del();insert(57);
-    del();del();del();del();
-    insert(13);
-    del();del();
+    insert(1);insert(1);insert(1);insert(1);insert(1);insert(1);insert(1);
 }

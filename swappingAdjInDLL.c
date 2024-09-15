@@ -35,7 +35,7 @@ struct node *createList(){
     printf("Enter the number of node: ");
     scanf("%d",&n);
     if(n==0)
-        return start;
+        exit(1);
     printf("Enter the elments\nElement 1: ");
     scanf("%d",&data);
     start=addAtBeg(data);
